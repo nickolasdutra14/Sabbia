@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sistema de Pedidos</title>
+ 
+<style>
+body {
+  font-family: "Segoe UI", Arial;
+  background-color: #f4f6f9;
+  margin: 0;
+}
+ 
+h2 {
+  background-color: #2f3e4d;
+  color: white;
+  padding: 15px;
+  margin: 0;
+}
+ 
+.container {
+  margin: 20px;
+}
+ 
+.box {
+  background: white;
+  padding: 20px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-bottom: 20px;
+}
+ 
+ul {
+  list-style: none;
+  padding: 0;
+}
+ 
+li {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+}
+ 
+button {
+  background-color: #2f80ed;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+ 
+button:hover {
+  background-color: #1c60c0;
+}
+ 
+input {
+  padding: 10px;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-bottom: 15px;
+}
+ 
+.ok {
+  color: green;
+  font-weight: bold;
+}
+ 
+#finalizar {
+  background-color: #27ae60;
+}
+ 
+#finalizar:hover {
+  background-color: #1e874b;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #2f3e4d;
+  color: white;
+  padding: 15px;
+  margin: 0;
+}
+ 
+.logo {
+  height: 40px;
+}
+
+</style>
+ 
+</head>
+<body>
+ 
+<h2 class="header">
+  <img src="logo.png" class="logo">
+  Separação
+</h2>
+ 
+<div class="container">
+ 
+<!-- Criar Pedido -->
+<div id="telaCriar" class="box">
+  <h3>Criar Requisição</h3>
+ 
+  <h4>Produtos:</h4>
+  <ul id="catalogo"></ul>
+ 
+  <h4>Itens no pedido:</h4>
+  <ul id="itensPedido"></ul>
+ 
+  <button onclick="confirmarPedido()">Confirmar Pedido</button>
+</div>
+ 
+<!-- VALIDAR -->
+<div id="telaValidar" class="box" style="display:none;">
+  <h3>Validar Pedido</h3>
+  <p>ID: <span id="pedidoId"></span></p>
+ 
+  <button onclick="voltar()">⬅ Voltar</button>
+ 
+  <input id="input" placeholder="Escaneie o código">
+ 
+  <ul id="lista"></ul>
+ 
+  <button id="finalizar" disabled onclick="finalizar()">Finalizar</button>
+</div>
+ 
+</div>
+ 
+<script>
+ 
+// ===== BANCO DE PRODUTOS =====
+let catalogo = [];
+ 
+function gerarProdutos(nome, codigoBase, cores, tamanhos) {
+  cores.forEach(cor => {
+    tamanhos.forEach(tam => {
+      catalogo.push({
+        sku: `${codigoBase}-${cor}-${tam}`.toUpperCase(),
+        nome: `${nome} - ${cor} (${tam})`
+      });
+    });
+  });
+}
+ 
+let tamanhos = ["P","M","G"];
+ 
+gerarProdutos("Maiô Nara Boho", "MAIO-NARA",
+ ["PRETO","MARROM","AZUL","VERDE"], tamanhos);
+ 
+gerarProdutos("Biquíni Nara Boho", "BIQ-NARA",
+ ["MARROM","VERMELHO","PRETO","VERDE","OFF","CARAMELO"], tamanhos);
+ 
+gerarProdutos("Brisa", "BRISA",
+ ["BRONZE","PRETO","OFF"], tamanhos);
+ 
+// ===== PEDIDO =====
+let pedido = {
+  id: "",
+  produtos: [],
+  embalados: []
+};
+ 
+// ===== RENDER CATALOGO =====
+let ul = document.getElementById("catalogo");
+ 
+catalogo.forEach(prod => {
+  let li = document.createElement("li");
+  li.textContent = prod.nome;
+ 
+  let btn = document.createElement("button");
+  btn.textContent = "+";
+  btn.onclick = () => adicionar(prod.sku);
+ 
+  li.appendChild(btn);
+  ul.appendChild(li);
+});
+ 
+// ===== ADICIONAR =====
+function adicionar(sku) {
+  pedido.produtos.push(sku);
+  renderCriacao();
+}
+ 
+// ===== REMOVER / LISTA =====
+function renderCriacao() {
+  let ul = document.getElementById("itensPedido");
+  ul.innerHTML = "";
+ 
+  pedido.produtos.forEach((sku, index) => {
+    let prod = catalogo.find(p => p.sku === sku);
+ 
+    let li = document.createElement("li");
+    li.textContent = prod.nome;
+ 
+    let btn = document.createElement("button");
+    btn.textContent = "Remover";
+    btn.onclick = () => {
+      pedido.produtos.splice(index, 1);
+      renderCriacao();
+    };
+ 
+    li.appendChild(btn);
+    ul.appendChild(li);
+  });
+}
+ 
+// ===== CONFIRMAR =====
+function gerarID() {
+  return "PED" + Math.floor(Math.random() * 10000);
+}
+ 
+function confirmarPedido() {
+  if (pedido.produtos.length === 0) {
+    alert("Adicione produtos!");
+    return;
+  }
+ 
+  pedido.id = gerarID();
+ 
+  document.getElementById("telaCriar").style.display = "none";
+  document.getElementById("telaValidar").style.display = "block";
+  document.getElementById("pedidoId").innerText = pedido.id;
+ 
+  render();
+}
+ 
+// ===== VOLTAR =====
+function voltar() {
+  document.getElementById("telaValidar").style.display = "none";
+  document.getElementById("telaCriar").style.display = "block";
+}
+ 
+// ===== VALIDAÇÃO =====
+document.getElementById("input").addEventListener("keydown", function(e) {
+  if (e.key === "Enter") {
+    let codigo = this.value.trim().toUpperCase();
+    this.value = "";
+    processarCodigo(codigo);
+  }
+});
+ 
+function processarCodigo(codigo) {
+  if (!codigo) return;
+ 
+  if (pedido.produtos.includes(codigo)) {
+ 
+    let total = pedido.produtos.filter(p => p === codigo).length;
+    let feitos = pedido.embalados.filter(p => p === codigo).length;
+ 
+    if (feitos < total) {
+      pedido.embalados.push(codigo);
+      enviarESP("G");
+    } else {
+      enviarESP("R");
+    }
+ 
+  } else {
+    enviarESP("R");
+  }
+ 
+  render();
+}
+ 
+// ===== RENDER VALIDAÇÃO =====
+function render() {
+  let ul = document.getElementById("lista");
+  ul.innerHTML = "";
+ 
+  let contagem = {};
+ 
+  pedido.produtos.forEach(p => {
+    contagem[p] = (contagem[p] || 0) + 1;
+  });
+ 
+  for (let sku in contagem) {
+    let prod = catalogo.find(p => p.sku === sku);
+ 
+    let total = contagem[sku];
+    let feitos = pedido.embalados.filter(p => p === sku).length;
+ 
+    let li = document.createElement("li");
+    li.textContent = `${prod.nome} (${feitos}/${total})`;
+ 
+    if (feitos === total) li.classList.add("ok");
+ 
+    ul.appendChild(li);
+  }
+ 
+  document.getElementById("finalizar").disabled =
+    pedido.embalados.length !== pedido.produtos.length;
+}
+ 
+// ===== FINALIZAR =====
+function finalizar() {
+  alert("Pedido finalizado!");
+  location.reload();
+}
+ 
+// ===== ESP32 =====
+function enviarESP(cmd) {
+  fetch("http://localhost:5000/comando", {
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify({ cmd: cmd })
+  }).catch(() => {
+    console.log(cmd === "G" ? "🟢 CORRETO" : "🔴 ERRADO");
+  });
+}
+ 
+</script>
+ 
+</body>
+</html>
+ 
