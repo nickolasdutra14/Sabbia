@@ -1,0 +1,37 @@
+#define LED_VERDE 19
+#define LED_VERMELHO 18
+
+void setup() {
+  Serial.begin(115200);
+
+  pinMode(LED_VERDE, OUTPUT);
+  pinMode(LED_VERMELHO, OUTPUT);
+}
+
+void loop() {
+
+  if (Serial.available()) {
+
+    char comando = Serial.read();
+
+    // VERDE
+    if (comando == 'G') {
+
+      digitalWrite(LED_VERDE, HIGH);
+      delay(500);
+      digitalWrite(LED_VERDE, LOW);
+
+    }
+
+    // VERMELHO
+    if (comando == 'R') {
+
+      digitalWrite(LED_VERMELHO, HIGH);
+      delay(500);
+      digitalWrite(LED_VERMELHO, LOW);
+
+    }
+
+  }
+
+}

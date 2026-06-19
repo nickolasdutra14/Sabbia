@@ -1,0 +1,244 @@
+body {
+    font-family: "Segoe UI", Arial;
+    background-color: #f4f6f9;
+    margin: 0;
+}
+ 
+ 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #2f3e4d;
+    color: white;
+    padding: 15px;
+    margin: 0;
+}
+ 
+.tituloHeader {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+ 
+.logo {
+    height: 40px;
+}
+ 
+.historico {
+    cursor: pointer;
+    font-size: 28px;
+    font-weight: bold;
+}
+ 
+.historico:hover {
+    opacity: 0.8;
+}
+  
+.container {
+    margin: 20px;
+}
+ 
+.box {
+    background: white;
+    padding: 20px;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+ 
+ 
+ul {
+    list-style: none;
+    padding: 0;
+}
+ 
+li {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+ 
+ 
+button {
+    background-color: #2f80ed;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+ 
+button:hover {
+    background-color: #1c60c0;
+}
+ 
+#finalizar {
+    background-color: #27ae60;
+}
+ 
+#finalizar:hover {
+    background-color: #1e874b;
+}
+ 
+ 
+input {
+    padding: 10px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    box-sizing: border-box;
+}
+ 
+ 
+.ok {
+    color: green;
+    font-weight: bold;
+}
+ 
+ 
+#listaHistorico {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+ 
+.historico-item {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding: 12px 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    border-bottom: 1px solid #e0e0e0;
+    flex-wrap: wrap;
+}
+ 
+.historico-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 110px;
+}
+ 
+.historico-id {
+    font-weight: bold;
+    font-size: 15px;
+    color: #2f3e4d;
+}
+ 
+.historico-data {
+    font-size: 13px;
+    color: #555;
+}
+ 
+.historico-hora {
+    font-size: 13px;
+    color: #888;
+}
+ 
+.historico-itens {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    flex: 1;
+}
+ 
+.tag-sku {
+    background-color: #eef3fb;
+    color: #2f80ed;
+    border: 1px solid #c5d8f7;
+    border-radius: 4px;
+    padding: 3px 8px;
+    font-size: 12px;
+    font-family: monospace;
+}
+ 
+.historico-item button {
+    background-color: #e74c3c;
+    margin-left: auto;
+    flex-shrink: 0;
+}
+ 
+.historico-item button:hover {
+    background-color: #c0392b;
+}
+
+
+#listaEstoque {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.estoque-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+}
+
+.estoque-nome {
+    flex: 1;
+    font-size: 14px;
+    color: #2f3e4d;
+}
+
+.estoque-controles {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.estoque-input {
+    width: 56px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+    color: #2f3e4d;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 4px 6px;
+    margin: 0;
+}
+
+.estoque-input.estoque-zero {
+    color: #e74c3c;
+    border-color: #e74c3c;
+}
+
+.estoque-input::-webkit-inner-spin-button,
+.estoque-input::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.estoque-input[type=number] { -moz-appearance: textfield; }
+
+.btn-menos, .btn-mais {
+    width: 32px;
+    height: 32px;
+    font-size: 20px;
+    font-weight: bold;
+    padding: 0;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-menos { background-color: #e74c3c; }
+.btn-menos:hover { background-color: #c0392b; }
+.btn-mais { background-color: #27ae60; }
+.btn-mais:hover { background-color: #1e874b; }
+
+.nav-inicio {
+    cursor: pointer;
+}
+.nav-inicio:hover {
+    opacity: 0.8;
+}

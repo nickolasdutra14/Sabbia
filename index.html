@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Pedidos</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <h2 class="header">
+        <div class="tituloHeader">
+            <img src="logo.png" class="logo">
+            <span class="nav-inicio" onclick="navegarPara('inicio')">Separacao</span>
+        </div>
+        <span class="historico" onclick="abrirHistorico()">Historico</span>
+        <span class="historico" onclick="abrirEstoque()">Estoque</span>
+    </h2>
+
+    <div class="container">
+
+        <div id="telaCriar" class="box">
+            <h3>Criar Pedido</h3>
+            <h4>Produtos:</h4>
+            <ul id="catalogo"></ul>
+            <h4>Itens no pedido:</h4>
+            <ul id="itensPedido"></ul>
+            <button onclick="confirmarPedido()">Confirmar Pedido</button>
+        </div>
+
+        <div id="telaValidar" class="box" style="display:none;">
+            <h3>Validar Pedido</h3>
+            <p>ID: <span id="pedidoId"></span></p>
+            <button onclick="voltar()">&#8592; Voltar</button>
+            <input id="input" placeholder="Escaneie o codigo">
+            <ul id="lista"></ul>
+            <button id="finalizar" disabled onclick="finalizar()">Finalizar</button>
+        </div>
+
+        <div id="telaHistorico" class="box" style="display:none;">
+            <h3>Historico</h3>
+            <ul id="listaHistorico"></ul>
+            <button onclick="fecharHistorico()">&#8592; Voltar</button>
+        </div>
+
+        <div id="telaEstoque" class="box" style="display:none;">
+            <h3>Estoque</h3>
+            <ul id="listaEstoque"></ul>
+            <button onclick="fecharEstoque()">&#8592; Voltar</button>
+        </div>
+
+        <div class="box">
+            <h3>Pedidos por Dia</h3>
+            <canvas id="grafico"></canvas>
+        </div>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+
+</body>
+</html>
